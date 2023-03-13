@@ -9,8 +9,19 @@ import in.astro.servicefactory.StudentServiceFactory;
 public class TestApp {
 	
 	public static void main(String[] args) {
-		selectOperation();
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Enter Student ID");
+		int sid = scanner.nextInt();
+		IStudentService studentService = StudentServiceFactory.getStudentService();
+		String msg =  studentService.deleteStudent(sid);
+		if (msg.equalsIgnoreCase("success"))
+			System.out.println("Success");
+		else if (msg.equalsIgnoreCase("Not found"))
+			System.out.println("record not available for given id ::"+sid);
+		else System.out.println("record deletion failed ..");
+		scanner.close();
 	}
+	@SuppressWarnings("unused")
 	private static void insertOperation() {
 		IStudentService studentService = StudentServiceFactory.getStudentService();
 		String msg = studentService.addStudent("Sachin", 49, "MI");
@@ -20,6 +31,7 @@ public class TestApp {
 		else 
 			System.out.println("record Insertion Failed!!");
 	}
+	@SuppressWarnings("unused")
 	private static void selectOperation() {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Enter Student SID :");
