@@ -46,7 +46,6 @@ public class StudentDaoImpl implements IStudentDao {
 					statement.setInt(1, sid);
 					resultset = statement.executeQuery();
 					if(resultset!=null) {
-						System.out.println(query);
 						if(resultset.next()) {
 							student = new Student();
 							student.setSid(1);
@@ -65,9 +64,26 @@ public class StudentDaoImpl implements IStudentDao {
 	}
 
 	@Override
-	public String updateStudent(Integer sid, String sname, Integer sage, String saddress) {
-		// TODO Auto-generated method stub
-		return null;
+	public String updateStudent(Student student) {
+		String query = "update students set name=?,age=?,address=? where id=?";
+		try {
+			connection = JdbcUtil.getConnection();
+			statement = connection.prepareStatement(query);
+			if (statement!=null) {
+				statement.setString(1, student.getSname());
+				statement.setInt(2, student.getSage());
+				statement.setString(3, student.getSaddress());
+				statement.setInt(4, student.getSid());
+				
+				int rowaffected = statement.executeUpdate();
+				if (rowaffected==1) {
+					return "success";
+				}
+			}
+		}catch (SQLException | IOException e) {
+			e.printStackTrace();
+		}
+		return "failure";
 	}
 
 	@Override
@@ -90,4 +106,6 @@ public class StudentDaoImpl implements IStudentDao {
 		}
 		return "failure";
 	}
+
+
 }

@@ -20,14 +20,15 @@ public class StudentServiceImpl implements IStudentService {
 	}
 
 	@Override
-	public String updateStudent(Integer sid, String sname, Integer sage, String saddress) {
-		return null;
-	}
-
-	@Override
 	public String deleteStudent(Integer sid) {
 		studentDao = StudentDaoFactory.getStudentDao();
 		return studentDao.deleteStudent(sid);
+	}
+
+	@Override
+	public String updateStudent(Student student) {
+		studentDao = StudentDaoFactory.getStudentDao();
+		return studentDao.updateStudent(student);
 	}
 
 }

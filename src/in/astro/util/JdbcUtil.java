@@ -9,15 +9,25 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
-public class JdbcUtil {
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 
+public class JdbcUtil {
+	private JdbcUtil() {
+		
+	}
+	static {
+		// Step 1: load and register the Driver
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+		}catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
 	public static Connection getConnection() throws SQLException, IOException {
-		FileInputStream fis = new FileInputStream("src\\in\\astro\\properties\\application.properties");
-		Properties properties = new Properties();
-		properties.load(fis);
-		Connection con = DriverManager.getConnection(properties.getProperty("url"),properties.getProperty("username"),properties.getProperty("password"));
-		// Create statement object and execute query
-		return con;
+		HikariConfig config = new HikariConfig("src\\in\\astro\\properties\\application.properties");
+		HikariDataSource dataSource = new HikariDataSource(config);
+		return dataSource.getConnection();
 	}
 	public static void cleanUp(Connection con,ResultSet resultset,Statement statement) throws SQLException {
 		if(resultset!=null) resultset.close();

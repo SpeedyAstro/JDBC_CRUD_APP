@@ -7,5 +7,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/libmysql"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/hikaricplib"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
